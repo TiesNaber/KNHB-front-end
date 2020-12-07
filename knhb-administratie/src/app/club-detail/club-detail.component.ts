@@ -6,6 +6,9 @@ import {ActivatedRoute } from '@angular/router';
 import {Location } from '@angular/common';
 import {ClubsService} from '../clubs.service';
 
+import {Team} from '../team';
+import {TeamsService} from '../teams.service';
+
 
 @Component({
   selector: 'app-club-detail',
@@ -15,20 +18,29 @@ import {ClubsService} from '../clubs.service';
 export class ClubDetailComponent implements OnInit {
 
   club: Club;
+  teams : Team[];
 
   constructor(private route: ActivatedRoute,
     private clubService: ClubsService,
+    private teamService: TeamsService,
     private location: Location
     ) { }
 
   ngOnInit(): void {
     this.getClub();
+    this.getTeams();
   }
 
   getClub():void{
 
     const id = +this.route.snapshot.paramMap.get('club_ID');
     this.clubService.getClub(id).subscribe(club => this.club = club);
+  }
+
+  getTeams():void{
+    this.teamService.getTeams()
+    .subscribe(teams => this.teams = teams);
+    
   }
 
 }
