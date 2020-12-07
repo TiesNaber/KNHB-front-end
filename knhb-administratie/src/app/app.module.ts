@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ClubsComponent } from './clubs/clubs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamsComponent } from './teams/teams.component';
+import { ClubDetailComponent } from './club-detail/club-detail.component';
 
 
 
@@ -32,6 +33,7 @@ import { TeamsComponent } from './teams/teams.component';
     DashboardComponent,
     ClubsComponent,
     TeamsComponent,
+    ClubDetailComponent,
   ],
   bootstrap: [ AppComponent ]
 })
