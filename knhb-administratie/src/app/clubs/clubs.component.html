@@ -20,15 +20,15 @@
             <div class="-hidden">
                 <ul class="list-group">
                     <li class="w-auto p-3 list-group-item" *ngFor="let club of clubs">
-                        <span role="button" class="p-2">{{club.id}}</span>{{club.naam}}
+                        <span role="button" class="p-2">{{club.club_ID}}</span>{{club.naam}}
                         <i role="button" class="fa fa-trash right marg_left fa-2x" style="color:red" aria-hidden="true"
                             (click)="deleteClub(club)">
                         </i>
                         <i role="button" class="fa fa-pencil right marg_left fa-2x" style="color:rgb(60, 128, 238)"
                             aria-hidden="true" (click)="selectClub(club)" (click)="showModifyScreen(content,true)">
                         </i>
-                        <i role="button" class="fa fa-search right marg_left fa-2x" style="color:rgb(65, 80, 66)" aria-hidden="true"
-                            (click)="openClubPage(club)">
+                        <i role="button" class="fa fa-search right marg_left fa-2x" style="color:rgb(65, 80, 66)" aria-hidden="true">
+                            <a routerLink="/clubs/{{club.club_ID}}"></a>
                         </i>
                     </li>
                 </ul>

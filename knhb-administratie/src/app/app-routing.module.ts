@@ -8,7 +8,7 @@ import {ClubDetailComponent} from './club-detail/club-detail.component';
 const routes: Routes = [
   {path: '', redirectTo: '/clubs', pathMatch: 'full' },  
   {path: 'clubs', component: ClubsComponent},
-  {path: 'clubs/:id', component: ClubDetailComponent}
+  {path: 'clubs/:club_ID', component: ClubDetailComponent}
 
 ];
 

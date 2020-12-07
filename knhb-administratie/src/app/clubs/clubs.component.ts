@@ -97,7 +97,7 @@ export class ClubsComponent implements OnInit {
   }
 
   openClubPage(club: Club): void{
-    this.messageService.add("Clubs: Opening " + club.naam + "'s page");
+    
   }
 
 }
