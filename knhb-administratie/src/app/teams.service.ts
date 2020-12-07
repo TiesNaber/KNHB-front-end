@@ -23,24 +23,24 @@ export class TeamsService {
     ) { }
 
     private log(message: string){
-      this.messageService.add(`ClubsService: ${message}`);
+      this.messageService.add(`TeamService: ${message}`);
     }
 
   getTeams(): Observable<Team[]>{
-    this.messageService.add('ClubService: Fetched clubs');
+    this.messageService.add('TeamService: Fetched clubs');
   
     return this.http.get<Team[]>(this.serverURL+`teams/all`)
     .pipe(catchError(this.handleError<Team[]>(`getTeams`, [])));
   }
 
-  addClub(club: Team):Observable<Team>{
-    this.messageService.add('ClubService: Add club pressed');
-    return this.http.post<Team>(this.serverURL+`teams/add`,club, this.httpOptions)
+  addTeam(team: Team):Observable<Team>{
+    this.messageService.add('TeamService: Add team pressed');
+    return this.http.post<Team>(this.serverURL+`teams/add`,team, this.httpOptions)
       .pipe(tap((newTeam: Team) => this.log(`added team w/ id=${newTeam.team_ID}`)),
-      catchError(this.handleError<Team>(`addClub`)));
+      catchError(this.handleError<Team>(`addTeam`)));
   }
 
-  deleteClub(team: Team | number):Observable<Team>{
+  deleteTeam(team: Team | number):Observable<Team>{
       const id = typeof team === 'number' ? team : team.team_ID;
       const url = this.serverURL+`teams/deleteByID${id}`;
 
