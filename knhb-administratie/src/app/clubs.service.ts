@@ -33,6 +33,15 @@ export class ClubsService {
     .pipe(catchError(this.handleError<Club[]>(`getClubs`, [])));
   }
 
+  getClub(id: number): Observable<Club>{
+    const url = `${this.serverURL+"clubs/getClubByID"}${id}`;
+    return this.http.get<Club>(url).pipe(
+      tap(_ => this.log(`Fetched club id =${id}`)),
+      catchError(this.handleError<Club>(`getClub id =${id}`))
+    );
+
+  }
+
   addClub(club: Club):Observable<Club>{
     this.messageService.add('ClubService: Add club pressed');
     return this.http.post<Club>(this.serverURL+`clubs/add`,club, this.httpOptions)
