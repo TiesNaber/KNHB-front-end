@@ -14,13 +14,13 @@
 <div *ngIf="teams.length > 0; else noTeams">
     <h3>Beschikbare teams: </h3>
     <div class="row">
-        <div class="col col-sm-3">
+        <div class="col col-sm-5">
             <div class="overflow-auto">
                 <div class="-hidden">
                     <ul class="list-group">
                         <li class="w-auto p-3 list-group-item" *ngFor="let team of teams">
                             <span class="p-2">{{team.team_ID}}</span>{{team.teamNaam}}
-                            <i role="button" class="fa fa-search right marg_right" style="color:rgb(65, 80, 66)"
+                            <i role="button" class="fa fa-search right marg_right fa-2x" style="color:rgb(65, 80, 66)"
                                 aria-hidden="true" (click)="selectTeam(team)">
                             </i>
                         </li>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <!-- TEAM DETAIL SECTION  -->
-        <div class="col col-sm-4"></div>
+        <div class="col col-sm-2"></div>
         <div *ngIf="selectedTeam != null;" class="col col-sm-5">      
             <div class="row">
                 <div class="col col-sm-3"><h3>{{selectedTeam.teamNaam}}</h3></div>
