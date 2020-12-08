@@ -33,6 +33,14 @@ export class TeamsService {
     .pipe(catchError(this.handleError<Team[]>(`getTeams`, [])));
   }
 
+  getTeamsByClubID(number): Observable<Team[]>{
+    this.messageService.add('TeamService: Fetched clubs');
+
+    return this.http.get<Team[]>(this.serverURL+`teams/byClubID${number}`)
+    .pipe(catchError(this.handleError<Team[]>(`getTeams`, [])));
+  }
+
+
   addTeam(team: Team):Observable<Team>{
     this.messageService.add('TeamService: Add team pressed');
     return this.http.post<Team>(this.serverURL+`teams/add`,team, this.httpOptions)

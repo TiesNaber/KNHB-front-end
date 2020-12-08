@@ -34,7 +34,7 @@ export class ClubsService {
   }
 
   getClub(id: number): Observable<Club>{
-    const url = `${this.serverURL+"clubs/getClubByID"}${id}`;
+    const url = this.serverURL+ `clubs/getByID${id}`;
     return this.http.get<Club>(url).pipe(
       tap(_ => this.log(`Fetched club id =${id}`)),
       catchError(this.handleError<Club>(`getClub id =${id}`))
