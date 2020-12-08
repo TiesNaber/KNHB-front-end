@@ -19,6 +19,8 @@ export class ClubDetailComponent implements OnInit {
 
   club: Club;
   teams : Team[];
+  selectedTeam: Team;
+  
 
   constructor(private route: ActivatedRoute,
     private clubService: ClubsService,
@@ -44,6 +46,10 @@ export class ClubDetailComponent implements OnInit {
     this.teamService.getTeamsByClubID(id)
     .subscribe(teams => this.teams = teams);
     
+  }
+
+  selectTeam(team: Team):void{
+    this.selectedTeam = team;
   }
 
 }
