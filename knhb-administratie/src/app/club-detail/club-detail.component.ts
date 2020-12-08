@@ -64,6 +64,7 @@ export class ClubDetailComponent implements OnInit {
 
   updateTeam():void{
     this.selectedTeam = this.teamPlaceholder;
+   
     this.teamService.updateTeam(this.selectedTeam);
   }
 
@@ -73,6 +74,7 @@ export class ClubDetailComponent implements OnInit {
   }
 
   addTeam():void{
+    this.newTeam.club_ID = this.club.club_ID;
     this.teamService.addTeam(this.newTeam)
     .subscribe(team => {this.teams.push(team);
     });
@@ -109,6 +111,7 @@ export class ClubDetailComponent implements OnInit {
   }
 
   showAddTeamScreen(content, setActive:boolean):void{
+  
     this.newTeam = {} as Team;
     this.showPopUpScreen(content);
     this.isAddTeam = setActive;

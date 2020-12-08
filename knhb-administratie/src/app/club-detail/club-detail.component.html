@@ -89,13 +89,13 @@
         <div class="container">
             <button type="button" class="btn btn-danger pull-left" (click)="modal.close('Save click')">cancel</button>
             <div *ngIf="isAddTeam; else updateButton">
-                <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')" (click)="addTeam();">Opslaan
+                <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')" (click)="addTeam()">Opslaan
                 </button>
             </div>
 
             <ng-template #updateButton>
                 <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')"
-                    (click)="updateTeam();">Wijzigingen opslaan
+                    (click)="updateTeam()">Wijzigingen opslaan
                 </button>
             </ng-template>
         </div>
