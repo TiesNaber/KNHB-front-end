@@ -72,6 +72,12 @@ export class ClubDetailComponent implements OnInit {
     this.teamService.deleteTeam(team).subscribe();
   }
 
+  addTeam():void{
+    this.teamService.addTeam(this.newTeam)
+    .subscribe(team => {this.teams.push(team);
+    });
+  }
+
   private getDismissReason(reason: any): string { 
     this.isModifyTeam = false;
     this.isAddTeam = false;
@@ -102,7 +108,7 @@ export class ClubDetailComponent implements OnInit {
     
   }
 
-  showAddClubScreen(content, setActive:boolean):void{
+  showAddTeamScreen(content, setActive:boolean):void{
     this.newTeam = {} as Team;
     this.showPopUpScreen(content);
     this.isAddTeam = setActive;
