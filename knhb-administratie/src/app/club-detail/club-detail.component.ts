@@ -24,21 +24,24 @@ export class ClubDetailComponent implements OnInit {
     private clubService: ClubsService,
     private teamService: TeamsService,
     private location: Location
-    ) { }
+    ) {}
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+
     this.getClub();
+  
   }
 
   getClub():void{
 
     const id = +this.route.snapshot.paramMap.get('club_ID');
     this.clubService.getClub(id).subscribe(club => this.club = club);
-
+    
   }
 
-  getTeams(number):void{
-    this.teamService.getTeamsByClubID(number)
+  getTeams(id: number):void{
+    
+    this.teamService.getTeamsByClubID(id)
     .subscribe(teams => this.teams = teams);
     
   }

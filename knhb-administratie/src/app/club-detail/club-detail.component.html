@@ -1,12 +1,21 @@
 <h1>{{club.naam}}</h1>
-<div class="overflow-auto">
-    <div class="col col-sm-12">
-        <div class="-hidden">
-            <ul class="list-group">
-                <li class="w-auto p-3 list-group-item" *ngFor="let team of teams">
-                    <span role="button" class="p-2">{{team.team_ID}}</span>{{team.teamNaam}}                 
-                </li>
-            </ul>
+
+<button type="button" (click)="getTeams(club.club_ID)">Bekijk beschikbare teams</button>
+
+<div *ngIf="teams.length > 0; else noTeams">
+    <h2>Beschikbare teams: </h2>
+    <div class="overflow-auto">
+        <div class="col col-sm-12">
+            <div class="-hidden">
+                <ul class="list-group">
+                    <li class="w-auto p-3 list-group-item" *ngFor="let team of teams">
+                        <span role="button" class="p-2">{{team.team_ID}}</span>{{team.teamNaam}}
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+</div>
+<div #noTeams>
+    <h2>Geen teams beschikbaar </h2>
 </div>
