@@ -28,17 +28,17 @@ export class ClubDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClub();
-    this.getTeams();
   }
 
   getClub():void{
 
     const id = +this.route.snapshot.paramMap.get('club_ID');
     this.clubService.getClub(id).subscribe(club => this.club = club);
+
   }
 
-  getTeams():void{
-    this.teamService.getTeams()
+  getTeams(number):void{
+    this.teamService.getTeamsByClubID(number)
     .subscribe(teams => this.teams = teams);
     
   }
