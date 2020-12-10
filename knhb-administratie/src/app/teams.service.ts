@@ -26,6 +26,15 @@ export class TeamsService {
       this.messageService.add(`TeamService: ${message}`);
     }
 
+    getTeam(id: number): Observable<Team>{
+      const url = this.serverURL+ `teams/getByID${id}`;
+      return this.http.get<Team>(url).pipe(
+        tap(_ => this.log(`Fetched team id =${id}`)),
+        catchError(this.handleError<Team>(`getTeam id =${id}`))
+      );
+  
+    }
+
   getTeams(): Observable<Team[]>{
     this.messageService.add('TeamService: Fetched clubs');
   
