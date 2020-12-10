@@ -46,7 +46,7 @@ export class ClubDetailComponent implements OnInit {
   getClub():void{
 
     const id = +this.route.snapshot.paramMap.get('club_ID');
-    this.clubService.getClub(id).subscribe(club => this.club = club);
+    this.clubService.getClub(id).subscribe(club => { this.club = club; this.getTeams(this.club.club_ID)});
     
   }
 
