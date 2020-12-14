@@ -8,7 +8,6 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Team } from '../team';
 import { TeamsService } from '../teams.service';
 import { Player } from '../player';
-import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-teams',
@@ -26,7 +25,6 @@ export class TeamsComponent implements OnInit {
 
   constructor(private teamService: TeamsService,
     private route: ActivatedRoute,
-    private playerService: PlayerService,
     private location: Location,
     private modalService:NgbModal) { }
 
@@ -36,34 +34,10 @@ export class TeamsComponent implements OnInit {
  
   getTeam():void{
     const id = +this.route.snapshot.paramMap.get('club_ID');
-    this.teamService.getTeam(id).subscribe(team => { this.team = team; this.getPlayers(this.team.team_ID)});
+    this.teamService.getTeam(id).subscribe(team => { this.team = team;});
   }
 
-  addPlayer(): void{
-    this.newPlayer.club_ID = this.team.club_ID;
-    this.newPlayer.team_ID = this.team.team_ID;
-    
-    this.playerService.addPlayer(this.newPlayer)
-    .subscribe(player => {this.players.push(player);
-    });
-  }
 
-  getPlayers(id: number): void{
-    this.playerService.getPlayersByTeamID(id).subscribe(spelers => this.players = spelers);
-  }
-
-  selectPlayer(player:Player): void{
-    this.playerPlaceholder = player;
-  } 
-
-  deletePlayer(player: Player):void{
-    this.players = this.players.filter(p => p !== player);
-    this.playerService.deletePlayer(player).subscribe();
-  }
-
-  updatePlayer(): void{
-    this.playerService.updatePlayer(this.selectedPlayer).subscribe();    
-  }
 
   
 
