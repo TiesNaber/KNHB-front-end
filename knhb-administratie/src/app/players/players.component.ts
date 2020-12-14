@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Club } from '../club';
 
 import { MessageService } from '../message.service';
 
 import { Player } from '../player';
 import { PlayerService } from '../player.service';
+import { Team } from '../team';
 
 
 @Component({
@@ -13,40 +15,44 @@ import { PlayerService } from '../player.service';
 })
 export class PlayersComponent implements OnInit {
 
+  club: Club;
+
   players: Player[];
+  selectedPlayer: Player; // actual club that is sent;
+  playerPlaceholder: Player; //placeholder when editing a club
+  newPlayer: Player; // placeholder when creating a new club;
+  
 
   constructor(private playerService: PlayerService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.getPlayers();
+   
   }
 
-  add(naam: string, geboorteDatum: string, adres: string, postcode: string, plaats: string, email: string, speelgerechtigd: boolean): void{
-    naam = naam.trim();
-    geboorteDatum = geboorteDatum.trim();
-    adres = adres.trim();
-    postcode = postcode.trim();
-    plaats = plaats.trim();
-    email = geboorteDatum.trim();
-
-
-    if(!naam) return;
-    if(!geboorteDatum) return;
-    if(!adres) return;
-    if(!postcode) return;
-    if(!plaats) return;
-    if(!email) return;
-    if(speelgerechtigd == null) return;
-
-    this.playerService.addPlayer({naam,geboorteDatum, adres, postcode, plaats, email, speelgerechtigd} as Player)
+  addPlayer(team: Team): void{
+    this.newPlayer.club_ID = team.club_ID;
+    this.newPlayer.team_ID = team.team_ID;
+    
+    this.playerService.addPlayer(this.newPlayer)
     .subscribe(player => {this.players.push(player);
     });
   }
 
+  getPlayers(id: number): void{
+    this.playerService.getPlayersByTeamID(id).subscribe(spelers => this.players = spelers);
+  }
 
-  getPlayers(): void{
-    this.playerService.getPlayers()
-     .subscribe(players => this.players = players);
+  selectPlayer(player:Player): void{
+    this.playerPlaceholder = player;
+  } 
+
+  deletePlayer(player: Player):void{
+    this.players = this.players.filter(p => p !== player);
+    this.playerService.deletePlayer(player).subscribe();
+  }
+
+  updatePlayer(): void{
+    this.playerService.updatePlayer(this.selectedPlayer).subscribe();    
   }
 
 }

@@ -1,17 +1,23 @@
 <h1>{{club.naam}}</h1>
 
-<button type="button" (click)="getTeams(club.club_ID)">Bekijk beschikbare teams</button>
+<div class="row">
+     <div class="col col-sm-4">
+        <button type="button" class="btn btn-primary"  (click)="showAddTeamScreen(content,true); getTeams(club.club_ID)">Nieuw team aanmaken</button>
+     </div>
+</div>
+<!-- BUTTON TO SHOW LIST OF TEAMS -->
 
+<!-- LIST OF TEAMS -->
 <div *ngIf="teams.length > 0; else noTeams">
     <h3>Beschikbare teams: </h3>
     <div class="row">
-        <div class="col col-sm-3">
+        <div class="col col-sm-5">
             <div class="overflow-auto">
                 <div class="-hidden">
                     <ul class="list-group">
                         <li class="w-auto p-3 list-group-item" *ngFor="let team of teams">
                             <span class="p-2">{{team.team_ID}}</span>{{team.teamNaam}}
-                            <i role="button" class="fa fa-search right marg_right" style="color:rgb(65, 80, 66)"
+                            <i role="button" class="fa fa-search right marg_right fa-2x" style="color:rgb(65, 80, 66)"
                                 aria-hidden="true" (click)="selectTeam(team)">
                             </i>
                         </li>
@@ -19,16 +25,85 @@
                 </div>
             </div>
         </div>
-        <div class="col col-sm-4"></div>
-        <div *ngIf="selectedTeam != null;" class="container w-auto p-3 my-3 bg-dark text-white col col-sm-5">
-            <h3>{{selectedTeam.teamNaam}}</h3>
-            <div >
+        <!-- TEAM DETAIL SECTION  -->
+        <div class="col col-sm-2"></div>
+        <div *ngIf="selectedTeam != null;" class="col col-sm-5">      
+            <div class="row">
+                <div class="col col-sm-3"><h3>{{selectedTeam.teamNaam}}</h3></div>
+                <div class="col col-sm-4">
+                    <button type="button" class="btn btn-success pull-right" (click)="showModifyScreen(content,true)"><i
+                        class="fa fa-pencil pull-right" style="color:white; align-content:left;"
+                        ></i>
+                    Team wijzigen
+                </button>
+                </div>
+                <div class="col col-sm-4">
+                    <button type="button" class="btn btn-danger pull-right" (click)="deleteTeam(selectedTeam)"><i
+                        class="fa fa-trash pull-right" style="color:white; align-content:left; "></i>
+                    Team verwijderen
+                </button>
+                </div>
+            </div>
+            <!-- TEAMS detail division -->
+            <div class="container w-auto p-3 my-3 bg-dark text-white " >
                 
             </div>
         </div>
     </div>
 </div>
 
+<!-- Pop up invoerscherm -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <span *ngIf="isAddTeam"><h6 class="modal-title" id="modal-basic-title">Nieuw Team Toevoegen</h6></span>
+        <span *ngIf="isModifyTeam"><h6 class="modal-title" id="modal-basic-title">Team wijzigen</h6></span>
+        
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <!-- POP-UP BODY/ Invoervelden-->
+    <div class="modal-body">
+        <div class="row">
+            <table class="table table">
+                <tbody >
+                    <tr *ngIf="isModifyTeam">
+                        <td>Team_ID</td>
+                        <td><label>{{teamPlaceholder.team_ID}}</label></td>
+                    </tr>               
+                    <tr>
+                        <td>Club naam</td>
+                        <td *ngIf="isModifyTeam"><input [(ngModel)]="teamPlaceholder.teamNaam" value="{{teamPlaceholder.teamNaam}}" /></td>
+                        <td *ngIf="isAddTeam"><input [(ngModel)]="newTeam.teamNaam"/></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Buttons van modal -->
+    <div class="modal-footer">
+        <div class="container">
+            <button type="button" class="btn btn-danger pull-left" (click)="modal.close('Save click')">cancel</button>
+            <div *ngIf="isAddTeam; else updateButton">
+                <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')" (click)="addTeam()">Opslaan
+                </button>
+            </div>
+
+            <ng-template #updateButton>
+                <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')"
+                    (click)="updateTeam()">Wijzigingen opslaan
+                </button>
+            </ng-template>
+        </div>
+    </div>
+
+</ng-template>
+
+<!-- NO TEAMS FOUND NOTIFICATION -->
 <ng-template #noTeams>
     <h2>Geen teams beschikbaar </h2>
 </ng-template>
+
+
+

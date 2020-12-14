@@ -1,0 +1,23 @@
+.list-group{
+    max-height: 500px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .marg_left {
+    line-height: 16px;
+    margin-left: 50px;
+  }
+  
+  .left {
+    float: left;
+  }
+  
+  .right {
+     float: right;
+  }
+  
+  .marg_right{
+     margin-right:12px;
+  }

@@ -6,7 +6,7 @@ adres: string;
 postcode: string;
 plaats: string;
 email: string;
-Club_ID: number;
-Team_ID: number;
+club_ID: number;
+team_ID: number;
 speelgerechtigd: boolean;
 }

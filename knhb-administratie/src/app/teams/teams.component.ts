@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
+import {ActivatedRoute } from '@angular/router';
+import {Location } from '@angular/common';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'; 
 
 import { Team } from '../team';
 import { TeamsService } from '../teams.service';
+import { Player } from '../player';
 
 @Component({
   selector: 'app-teams',
@@ -13,41 +16,29 @@ import { TeamsService } from '../teams.service';
 })
 export class TeamsComponent implements OnInit {
 
-  teams: Team[];
-  selectedTeam: Team; // actual club that is sent;
-  teamPlaceholder: Team; //placeholder when editing a club
-  newTeam: Team; // placeholder when creating a new club;
+  team : Team;
 
-  constructor(private teamService: TeamsService, private messageService: MessageService, private modalService:NgbModal) { }
+  players: Player[];
+  selectedPlayer: Player; // actual club that is sent;
+  playerPlaceholder: Player; //placeholder when editing a club
+  newPlayer: Player; // placeholder when creating a new club;
+
+  constructor(private teamService: TeamsService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private modalService:NgbModal) { }
 
   ngOnInit(): void {
-    this.getTeams();
+    this.getTeam();
+  }
+ 
+  getTeam():void{
+    const id = +this.route.snapshot.paramMap.get('club_ID');
+    this.teamService.getTeam(id).subscribe(team => { this.team = team;});
   }
 
-  addTeam(): void{     
-    this.teamService.addTeam(this.newTeam)
-    .subscribe(team => {this.teams.push(team);
-    });
-  }
 
-  getTeams(): void{
-    this.teamService.getTeams()
-     .subscribe(teams => this.teams = this.teams);
-  }
 
-  selectTeam(team:Team): void{
-    this.teamPlaceholder = team;
-    this.messageService.add("Teams: Selected team ==" + this.teamPlaceholder.teamNaam);
-  } 
-
-  deleteTeam(team: Team):void{
-    this.teams = this.teams.filter(c => c !== team);
-    this.teamService.deleteTeam(team).subscribe();
-  }
-
-  updateTeam(): void{
-    this.selectedTeam = this.teamPlaceholder;
-    this.teamService.updateTeam(this.selectedTeam).subscribe();    
-  }
+  
 
 }
