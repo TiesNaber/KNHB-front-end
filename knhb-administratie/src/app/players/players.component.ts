@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Club } from '../club';
 
 import { MessageService } from '../message.service';
@@ -14,6 +14,8 @@ import { Team } from '../team';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
+  @Input() id: number;
+
 
   club: Club;
 
@@ -26,7 +28,7 @@ export class PlayersComponent implements OnInit {
   constructor(private playerService: PlayerService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-   
+    this.getPlayers(this.id); 
   }
 
   addPlayer(team: Team): void{
