@@ -1,49 +1,15 @@
-<h2>Team 2 Spelers</h2>
-<div>
-  <div>
-    <label>Player Name:
-      <input #playerName/>
-    </label>
+<!--Lijst van clubs container-->
+<div class="overflow-auto">
+  <div class="col col-sm-12">
+      <div class="-hidden">
+          <ul class="list-group">
+              <li class="w-auto p-3 list-group-item" *ngFor="let speler of spelers">
+                  <span role="button" class="p-2">{{speler.naam}}</span>
+              </li>
+          </ul>
+      </div>
   </div>
-    <div>  
-      <label>BirthDate:
-      <input #birth/>
-    </label>
-  </div>
-    <div> <label>adres:
-      <input #adres/>
-    </label>
-  </div>
-    <div> <label>postcode:
-      <input #zip/>
-    </label>
-  </div>
-    <div><label>plaatsnaam:
-      <input #plaats/>
-    </label>
-  </div>
-    <div><label>email:
-      <input #email/>
-    </label>
-  </div>
-    <div>
-      <label>speelgerechtigd:
-        <input type="checkbox" #canPlay/>
-      </label>
-  </div> 
-
-  <button (click)="add(playerName.value, birth.value, adres.value, zip.value, plaats.value, email.value, canPlay.value); playerName.value=''">
-    add new player
-  </button>
 </div>
-
-<ul class="players">
-  <li *ngFor="let player of players">
-      <a routerLink="/detail/{{player.id}}">
-        <span class="badge">{{player.id}}</span> {{player.naam}}
-      </a>
-  </li>
-</ul>
 
 
 
