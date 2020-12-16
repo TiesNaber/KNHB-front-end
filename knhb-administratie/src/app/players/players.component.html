@@ -1,51 +1,73 @@
-<h2>Team 2 Spelers</h2>
+<!--Lijst van clubs container-->
+<div class="col col-sm-12">
+    <ul class="list-group">
+        <li class="w-auto p-3 list-group-item" *ngFor="let speler of spelers">
+            <span></span>{{speler.naam}}
+        </li>
+    </ul>
+</div>
 <div>
-  <div>
-    <label>Player Name:
-      <input #playerName/>
-    </label>
-  </div>
-    <div>  
-      <label>BirthDate:
-      <input #birth/>
-    </label>
-  </div>
-    <div> <label>adres:
-      <input #adres/>
-    </label>
-  </div>
-    <div> <label>postcode:
-      <input #zip/>
-    </label>
-  </div>
-    <div><label>plaatsnaam:
-      <input #plaats/>
-    </label>
-  </div>
-    <div><label>email:
-      <input #email/>
-    </label>
-  </div>
-    <div>
-      <label>speelgerechtigd:
-        <input type="checkbox" #canPlay/>
-      </label>
-  </div> 
-
-  <button (click)="add(playerName.value, birth.value, adres.value, zip.value, plaats.value, email.value, canPlay.value); playerName.value=''">
-    add new player
-  </button>
+    <button type="button" class="btn btn-primary pull-right" (click)="addSpelerScreenActive(content, true)"><i
+            class="fa fa-plus pull-right" style="color:white; align-content:left; "></i>
+        Speler Toevoegen
+    </button>
 </div>
 
-<ul class="players">
-  <li *ngFor="let player of players">
-      <a routerLink="/detail/{{player.id}}">
-        <span class="badge">{{player.id}}</span> {{player.naam}}
-      </a>
-  </li>
-</ul>
+<!-- Pop up invoerscherm -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">Nieuwe Speler Toevoegen</h6>
 
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <!-- POP-UP BODY/ Invoervelden-->
+    <div class="modal-body">
+        <div class="row">
+            <table class="table table">
+                <tbody>
+                    <tr>
+                        <td>Naam</td>
+                        <td><input [(ngModel)]="newPlayer.naam" /></td>
+                    </tr>
+                    <tr>
+                        <td>Geboortedatum</td>
+                        <td><input [(ngModel)]="newPlayer.geboorteDatum" /></td>
+                    </tr>
+                    <tr>
+                        <td>Adres</td>
+                        <td><input [(ngModel)]="newPlayer.adres" /></td>
+                    </tr>
+                    <tr>
+                        <td>Postcode</td>
+                        <td><input [(ngModel)]="newPlayer.postcode" /></td>
+                    </tr>
+                    <tr>
+                        <td>Plaats</td>
+                        <td><input [(ngModel)]="newPlayer.plaats" /></td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td><input [(ngModel)]="newPlayer.email" /></td>
+                    </tr>
+                    <tr>
+                        <td>Speelgerechtigd</td>
+                        <td><input type="checkbox" [(ngModel)]="newPlayer.speelgerechtigd" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <!-- Buttons van modal -->
+    <div class="modal-footer">
+        <div class="container">
+            <button type="button" class="btn btn-danger pull-left" (click)="modal.close('Save click')">cancel</button>
 
-
-
+            <button type="button" class="btn btn-success pull-right" (click)="modal.close('Save click')"
+                (click)="addPlayer()">Opslaan
+            </button>
+        </div>
+    </div>
+</ng-template>
