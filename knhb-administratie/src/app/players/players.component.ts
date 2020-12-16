@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Club } from '../club';
 
 import { MessageService } from '../message.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'; 
 
 import { Player } from '../player';
 import { PlayerService } from '../player.service';
+import { Team } from '../team';
+
+
 
 
 @Component({
@@ -11,42 +16,86 @@ import { PlayerService } from '../player.service';
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
-export class PlayersComponent implements OnInit {
+export class PlayersComponent implements OnInit, OnChanges {
+  @Input() team: Team;
 
-  players: Player[];
 
-  constructor(private playerService: PlayerService, private messageService: MessageService) { }
+  club: Club;
+
+  spelers: Player[];
+  selectedPlayer: Player; // actual club that is sent;
+  playerPlaceholder: Player; //placeholder when editing a club
+  newPlayer: Player; // placeholder when creating a new club;
+
+  isAddSpeler:boolean = false;
+  closeResult = '';
+  
+
+  constructor(private playerService: PlayerService,
+     private messageService: MessageService,
+    private modalService:NgbModal
+    ) { }
 
   ngOnInit(): void {
-    this.getPlayers();
+    this.getPlayers(this.team.team_ID); 
   }
 
-  add(naam: string, geboorteDatum: string, adres: string, postcode: string, plaats: string, email: string, speelgerechtigd: boolean): void{
-    naam = naam.trim();
-    geboorteDatum = geboorteDatum.trim();
-    adres = adres.trim();
-    postcode = postcode.trim();
-    plaats = plaats.trim();
-    email = geboorteDatum.trim();
+  ngOnChanges():void{
+    this.getPlayers(this.team.team_ID);
+  }
 
-
-    if(!naam) return;
-    if(!geboorteDatum) return;
-    if(!adres) return;
-    if(!postcode) return;
-    if(!plaats) return;
-    if(!email) return;
-    if(speelgerechtigd == null) return;
-
-    this.playerService.addPlayer({naam,geboorteDatum, adres, postcode, plaats, email, speelgerechtigd} as Player)
-    .subscribe(player => {this.players.push(player);
+  addPlayer(): void{
+    this.newPlayer.club_ID = this.team.club_ID;
+    this.newPlayer.team_ID = this.team.team_ID;
+    
+    this.playerService.addPlayer(this.newPlayer)
+    .subscribe(player => {this.spelers.push(player);
     });
   }
 
+  getPlayers(id: number): void{
+    this.playerService.getPlayersByTeamID(id).subscribe(spelers => this.spelers = spelers);
+  }
 
-  getPlayers(): void{
-    this.playerService.getPlayers()
-     .subscribe(players => this.players = players);
+  selectPlayer(player:Player): void{
+    this.playerPlaceholder = player;
+  } 
+
+  deletePlayer(player: Player):void{
+    this.spelers = this.spelers.filter(p => p !== player);
+    this.playerService.deletePlayer(player).subscribe();
+  }
+
+  updatePlayer(): void{
+    this.playerService.updatePlayer(this.selectedPlayer).subscribe();    
+  }
+
+  private getDismissReason(reason: any): string { 
+    this.isAddSpeler = false;
+    
+    if (reason === ModalDismissReasons.ESC) { 
+      return 'by pressing ESC'; 
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) { 
+      return 'by clicking on a backdrop'; 
+    } else { 
+      return `with: ${reason}`; 
+    } 
+  }
+  private showPopUpScreen(content){
+    
+    this.modalService.open(content, 
+      {size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => { 
+         this.closeResult = `Closed with: ${result}`; 
+       }, (reason) => { 
+         this.closeResult =  
+            `Dismissed ${this.getDismissReason(reason)}`; 
+       });
+  }
+
+  addSpelerScreenActive(content, setActive:boolean):void{
+    this.newPlayer = {} as Player;
+    this.showPopUpScreen(content);
+    this.isAddSpeler = setActive;
   }
 
 }

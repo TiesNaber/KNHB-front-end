@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
 
-import {NgbModal, ModalDismissReasons}  
-      from '@ng-bootstrap/ng-bootstrap'; 
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap'; 
 
 import { ClubsService } from '../clubs.service';
 import {Club} from '../club';
@@ -97,7 +96,7 @@ export class ClubsComponent implements OnInit {
   }
 
   openClubPage(club: Club): void{
-    this.messageService.add("Clubs: Opening " + club.naam + "'s page");
+    
   }
 
 }

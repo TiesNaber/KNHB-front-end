@@ -14,36 +14,45 @@ import { Player } from './player';
 export class PlayerService {
 
   private serverURL = "http://localhost:8080/" // url to web API
-  private getPlayerURL = "spelers/getAll";
-  private getPlayerByID = "spelers/getPlayer";
+  private getPlayerURL = "spelers/all";
+  private getPlayerByID = "spelers/getByID";
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   
 
-  constructor(private http: HttpClient,
-    private messageService: MessageService
-    ) { }
+  constructor(private http: HttpClient, private messageService: MessageService) { }
 
     private log(message: string){
       this.messageService.add(`PlayerService: ${message}`);
     }
 
-    addPlayer(player: Player): Observable<Player>{
-      return this.http.post<Player>(this.serverURL+`spelers/addSpeler`,player, this.httpOptions)
+  addPlayer(player: Player): Observable<Player>{
+      
+    return this.http.post<Player>(this.serverURL+`spelers/add`,player, this.httpOptions)
       .pipe(tap((newPlayer: Player) => this.log(`added hero w/ id=${newPlayer.id}`)),
       catchError(this.handleError<Player>(`addPlayer`))
-      );
-    }
+    );
+  }
 
-    // Return all mock players;
-    getPlayers(): Observable<Player[]>{
-        this.messageService.add('PlayerService: Fetched players');
-        this.messageService.add(this.serverURL+this.getPlayerURL+ "== path" );
-        return this.http.get<Player[]>(this.serverURL+this.getPlayerURL)
-        .pipe(catchError(this.handleError<Player[]>(`getPlayers`, [])));
-      }
+  updatePlayer(player:Player):Observable<Player>{
+    const url = this.serverURL+`players/update${player.id}`;
+    return this.http.put(url, player, this.httpOptions).pipe(
+      tap(_ => this.log(`updated player id=${player.id}`)),
+      catchError(this.handleError<any>('updatePlayer'))
+    );
+
+  }
+
+  deletePlayer(player: Player | number):Observable<Player>{
+    const id = typeof player === 'number' ? player : player.id;
+    const url = this.serverURL+`clubs/deleteByID${id}`;
+
+    return this.http.delete<Player>(url,this.httpOptions).pipe(
+      tap(_ => this.log(`Deleted Club id=${id}`)),
+    catchError(this.handleError<Player>('deleteClub')));
+}
 
   getPlayer(id: number): Observable<Player>{
 
@@ -53,6 +62,24 @@ export class PlayerService {
      catchError(this.handleError<Player>(`getPlayer id =${id}`))
    );
   }
+
+  getPlayersByTeamID(id: number): Observable<Player[]>{
+
+    const url =  `${this.serverURL + `spelers/byTeamID`}${id}`;
+    return this.http.get<Player[]>(url).pipe(
+      tap(_ => this.log(`Fetched player id =${id}`)),
+      catchError(this.handleError<Player[]>(`getPlayer id =${id}`))
+    );
+   }
+
+   getPlayersByClubID(id: number): Observable<Player[]>{
+
+    const url =  `${this.serverURL + `spelers/byClubID`}${id}`;
+    return this.http.get<Player[]>(url).pipe(
+      tap(_ => this.log(`Fetched player id =${id}`)),
+      catchError(this.handleError<Player[]>(`getPlayer id =${id}`))
+    );
+   }
 
   /**
    * Handle Http operation that failed.
