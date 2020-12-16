@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from '../message.service';
 import {ActivatedRoute } from '@angular/router';
 import {Location } from '@angular/common';
@@ -15,7 +15,7 @@ import { Player } from '../player';
   styleUrls: ['./teams.component.css']
 })
 export class TeamsComponent implements OnInit {
-
+  @Input() teamID: number;
   team : Team;
 
   players: Player[];

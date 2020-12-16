@@ -16,12 +16,9 @@ export class DashboardComponent implements OnInit {
   constructor(private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.getPlayers();
+
   }
 
-  getPlayers(): void{
-    this.playerService.getPlayers()
-    .subscribe(players => this.players = this.players.slice(1,5));
-  }
+
 
 }

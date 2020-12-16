@@ -30,7 +30,7 @@ export class PlayerService {
 
   addPlayer(player: Player): Observable<Player>{
       
-    return this.http.post<Player>(this.serverURL+`spelers/addSpeler`,player, this.httpOptions)
+    return this.http.post<Player>(this.serverURL+`spelers/add`,player, this.httpOptions)
       .pipe(tap((newPlayer: Player) => this.log(`added hero w/ id=${newPlayer.id}`)),
       catchError(this.handleError<Player>(`addPlayer`))
     );

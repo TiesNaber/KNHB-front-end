@@ -27,6 +27,7 @@ export class ClubDetailComponent implements OnInit {
 
   isModifyTeam:boolean = false;
   isAddTeam:boolean = false;
+  isAddPlayer = false;
   closeResult = '';
   
 
