@@ -21,3 +21,10 @@
   .marg_right{
      margin-right:12px;
   }
+
+  .div_bg-color{
+    background-color: rgba(218, 209, 209, 0.459);
+    border-top: px solid #ddd;
+    border-radius: 0;
+    color: rgb(44, 28, 7);
+  }

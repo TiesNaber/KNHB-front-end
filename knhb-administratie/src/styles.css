@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+/* Set a background image by replacing the URL below */
+body {
+    background: url('./assets/dwf-logo.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: auto;
+    -o-background-size: cover;
+  }
+
+  .list-group-item {
+    background-color: rgba(255, 255, 255, 0.897);
+    border-top: px solid #ddd;
+    border-radius: 0;
+    color: rgb(0, 0, 0);
+    }
+
+    .div_bg-color{
+      background-color: rgba(218, 209, 209, 0.459);
+      border-top: px solid #ddd;
+      border-radius: 0;
+      color: rgb(44, 28, 7);
+    }
